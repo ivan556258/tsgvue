@@ -1,27 +1,50 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import AppTableCounts from '../views/table/AppTableCounts.vue'
+import AppTableInhabitans from '../views/table/AppTableInhabitans.vue'
+import AppTableEemployee from '../views/table/AppTableEemployee.vue'
+import AppTableBlog from '../views/table/AppTableBlog.vue'
+import AppTableMessages from '../views/table/AppTableMessages.vue'
+import AppTableSettings from '../views/table/AppTableSettings.vue'
 
 Vue.use(VueRouter)
-
-const routes = [
+export default new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes: [
   {
-    path: '/',
-    name: 'home',
-    component: Home
+    path: '/counts',
+    name: 'Счетчики',
+    component: AppTableCounts
   },
   {
-    path: '/about',
-    name: 'about',
+    path: '/inhabitans',
+    name: 'Жители',
+    component: AppTableInhabitans
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    //component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+    path: '/employee',
+    name: 'Сотрудники',
+    component: AppTableEemployee
+  },
+  {
+    path: '/blog',
+    name: 'Блог',
+    component: AppTableBlog
+  },
+  {
+    path: '/messages',
+    name: 'Сообщения',
+    component: AppTableMessages
+  },
+  {
+    path: '/settings',
+    name: 'Настройки',
+    component: AppTableSettings
   }
 ]
-
-const router = new VueRouter({
-  routes
 })
-
-export default router

@@ -28,13 +28,12 @@
         dense
         class="grey lighten-4"
       >
-        <template >
-
-          <v-list-item v-for="item in items" :key="item.i" router :to="item.route">
+        <template>
+          <v-list-item v-for="item in items" :key="item.i">
             <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
-            <v-list-item-content>
+            <v-list-item-content >
               <v-list-item-title class="grey--text">
                 {{ item.text }}
               </v-list-item-title>
@@ -49,7 +48,7 @@
  
           
             
-            <AppTableInhabitans/>
+        
      
      
     </v-content>
@@ -57,52 +56,31 @@
 </template>
 
 <script>
-import AppTableInhabitans from './tables/AppTableInhabitans.vue'
- 
+
+
   export default {
     name: 'AppBaseSrtucture',
     props: {
       source: String,
     },
-    components:{
-        AppTableInhabitans
-    },
+
     data: () => ({
       drawer: null,
       items: [
-        { 
-          icon: '', 
-          text: 'Счетчики',
-          route: '/counts'
-        },
-        { 
-          icon: '', 
-          text: 'Жители',
-          route: '/inhabitans' 
-        },
-        { 
-          icon: '', 
-          text: 'Сотрудники',
-          route: '/employee'  
-        },
+        { icon: '', text: 'Notes' },
+        { icon: '', text: 'Reminders' },
+   
+        { heading: '' },
+        { icon: '', text: 'Create new label' },
 
-        { 
-          icon: '', 
-          text: 'Блог',
-          route: '/blog'  
-        },
+        { icon: '', text: 'Archive' },
+        { icon: '', text: 'Trash' },
 
-        { 
-          icon: '', 
-          text: 'Сообщения',
-          route: '/messages' 
-        },
-
-        { 
-          icon: '', 
-          text: 'Настройки',
-          route: '/settings'  
-          },
+        { icon: '', text: 'Settings' },
+        { icon: '', text: 'Trash' },
+        { icon: '', text: 'Help' },
+        { icon: '', text: 'App downloads' },
+        { icon: '', text: 'Keyboard shortcuts' },
       ],
     }),
   }
