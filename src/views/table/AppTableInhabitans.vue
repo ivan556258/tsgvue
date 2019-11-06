@@ -16,7 +16,7 @@
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="100%">
           <template v-slot:activator="{ on }">
-            <v-btn color="primary" dark class="mb-2" v-on="on">Добавмить жителя</v-btn>
+            <v-btn color="primary" dark class="mb-2" v-on="on"><v-icon>email</v-icon> Добавмить жителя</v-btn>
           </template>
           <v-card>
             <v-card-title>
