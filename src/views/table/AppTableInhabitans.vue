@@ -27,10 +27,40 @@
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.name" label="Улица д. кв."></v-text-field>
+                    <v-text-field v-model="editedItem.last_name" label="Фамилия"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.id" label="Улица д. кв."></v-text-field>
+                    <v-text-field v-model="editedItem.first_name" label="Имя"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.old_name" label="Отчество"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.street" label="Улица"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.number_home" label="Номер дома"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.number_appartament" label="Номер квартиры"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.last_name" label="Емайл"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.phone" label="Номер телефона"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.number_telegram" label="Телеграм аккаунт"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.email" label="Емайл"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.number_viber" label="Номер вайбер"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.number_whatsapp" label="Номер ватсап"></v-text-field>
                   </v-col>
                 </v-row>
               </v-container>
@@ -76,7 +106,7 @@
           sortable: false,
           value: 'name',
         },
-        { text: 'ФИО', value: 'initials' },
+        { text: 'ФИО', value: 'last_name' },
         { text: 'Телефон', value: 'phone' },
         { text: 'Емайл', value: 'email' },
         { text: 'Счёт', value: 'score' },
@@ -85,25 +115,15 @@
       desserts: [],
       editedIndex: -1,
       editedItem: {
-        name: '',
-        score: 0,
-        initials: 0,
-        phone: 0,
-        email: 0,
-        id: 0,
+        phone: +7
       },
       defaultItem: {
-        name: '',
-        score: 0,
-        initials: 0,
-        phone: 0,
-        email: 0,
-        id: 1,
+        phone: +7
       },
     }),
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+        return this.editedIndex === -1 ? 'Создать' : 'Редактировать'
       },
     },
     watch: {
@@ -206,7 +226,7 @@
       },
       deleteItem (item) {
         const index = this.desserts.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+        confirm('Вы уверены, что хотите удалить жильца?') && this.desserts.splice(index, 1)
       },
       close () {
         this.dialog = false
@@ -217,8 +237,10 @@
       },
       save () {
         if (this.editedIndex > -1) {
+          console.log('when editing')
           Object.assign(this.desserts[this.editedIndex], this.editedItem)
         } else {
+          console.log('when additing')
           this.desserts.push(this.editedItem)
         }
         this.close()
