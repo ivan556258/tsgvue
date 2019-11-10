@@ -5,6 +5,9 @@
     sort-by="score"
     class="elevation-1"
   >
+  <template v-slot:item.score="{ item }">
+      <v-chip :color="getColor(item.score)" dark>{{ item.score }}</v-chip>
+  </template>
     <template v-slot:top>
       <v-toolbar flat color="white">
         <v-toolbar-title>Жители</v-toolbar-title>
@@ -26,6 +29,34 @@
             <v-card-text>
               <v-container>
                 <v-row>
+<v-col cols="12" sm="6" md="4">
+  <v-menu
+    ref="menu"
+    v-model="menu"
+    :close-on-content-click="false"
+    transition="scale-transition"
+    offset-y
+    full-width
+    min-width="290px"
+  >
+    <template v-slot:activator="{ on }">
+      <v-text-field
+        v-model="date"
+        label="Дата рождения"
+        readonly
+        v-on="on"
+      ></v-text-field>
+    </template>
+    <v-date-picker
+      ref="picker"
+      v-model="date"
+      :max="new Date().toISOString().substr(0, 10)"
+      min="1950-01-01"
+      @change="save"
+    ></v-date-picker>
+  </v-menu>
+</v-col>
+
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field v-model="editedItem.last_name" label="Фамилия"></v-text-field>
                   </v-col>
@@ -45,16 +76,13 @@
                     <v-text-field v-model="editedItem.number_appartament" label="Номер квартиры"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.last_name" label="Емайл"></v-text-field>
+                    <v-text-field v-model="editedItem.email" label="Емайл"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field v-model="editedItem.phone" label="Номер телефона"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field v-model="editedItem.number_telegram" label="Телеграм аккаунт"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.email" label="Емайл"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field v-model="editedItem.number_viber" label="Номер вайбер"></v-text-field>
@@ -104,9 +132,9 @@
           text: 'Улица д. кв.',
           align: 'left',
           sortable: false,
-          value: 'name',
+          value: 'address',
         },
-        { text: 'ФИО', value: 'last_name' },
+        { text: 'ФИО', value: 'initials'},
         { text: 'Телефон', value: 'phone' },
         { text: 'Емайл', value: 'email' },
         { text: 'Счёт', value: 'score' },
@@ -130,6 +158,9 @@
       dialog (val) {
         val || this.close()
       },
+      menu (val) {
+        val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
+      },
     },
     created () {
       this.initialize()
@@ -138,86 +169,24 @@
       initialize () {
         this.desserts = [
           {
-            name: 'Frozen Yogurt',
-            score: 159,
+            address: 'Frozen Yogurt',
             initials: 6.0,
             phone: 24,
             email: 4.0,
-            id: 0,
+            score: 2,
           },
           {
-            name: 'Ice cream sandwich',
-            score: 237,
-            initials: 9.0,
-            phone: 37,
-            email: 4.3,
-            id: 1,
-          },
-          {
-            name: 'Eclair',
-            score: 262,
-            initials: 16.0,
-            phone: 23,
-            email: 6.0,
-            id: 2,
-          },
-          {
-            name: 'Cupcake',
-            score: 305,
-            initials: 3.7,
-            phone: 67,
-            email: 4.3,
-            id: 3,
-          },
-          {
-            name: 'Gingerbread',
-            score: 356,
-            initials: 16.0,
-            phone: 49,
-            email: 3.9,
-            id: 4,
-          },
-          {
-            name: 'Jelly bean',
-            score: 375,
-            initials: 0.0,
-            phone: 94,
-            email: 0.0,
-            id: 5,
-          },
-          {
-            name: 'Lollipop',
-            score: 392,
-            initials: 0.2,
-            phone: 98,
-            email: 0,
-            id: 6,
-          },
-          {
-            name: 'Honeycomb',
-            score: 408,
-            initials: 3.2,
-            phone: 87,
-            email: 6.5,
-            id: 7,
-          },
-          {
-            name: 'Donut',
-            score: 452,
-            initials: 25.0,
-            phone: 51,
-            email: 4.9,
-            id: 8,
-          },
-          {
-            name: 'KitKat',
-            score: 518,
-            initials: 26.0,
-            phone: 65,
-            email: 7,
-            id: 9,
+            address: 'Frozen Yogurt',
+            initials: 6.0,
+            phone: 24,
+            email: 4.0,
+            score: -200,
           },
         ]
+      },
+      getColor (score) {
+        if (score < 0) return 'red'
+        else return 'green'
       },
       editItem (item) {
         this.editedIndex = this.desserts.indexOf(item)
@@ -237,10 +206,13 @@
       },
       save () {
         if (this.editedIndex > -1) {
-          console.log('when editing')
+          this.editedItem.initials = this.editedItem.last_name + ' ' + this.editedItem.first_name.substring(0, 1) + '.' + this.editedItem.old_name.substring(0, 1)
+          this.editedItem.address = this.editedItem.street + ' ' + this.editedItem.number_home + '.' + this.editedItem.number_appartament
           Object.assign(this.desserts[this.editedIndex], this.editedItem)
         } else {
-          console.log('when additing')
+          this.$refs.menu.save()
+          this.editedItem.initials = this.editedItem.last_name + ' ' + this.editedItem.first_name.substring(0, 1) + '.' + this.editedItem.old_name.substring(0, 1)
+          this.editedItem.address = this.editedItem.street + ' ' + this.editedItem.number_home + '.' + this.editedItem.number_appartament
           this.desserts.push(this.editedItem)
         }
         this.close()
