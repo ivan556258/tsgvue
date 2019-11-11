@@ -8,6 +8,52 @@
   <template v-slot:item.score="{ item } ">
       <v-chip :color="getColor(item.score)" dark>{{ item.score }}</v-chip>
   </template>
+  <template v-slot:item.dialogx="{ item }">
+
+  <div class="text-center">
+    <v-dialog
+      v-model="dialogx"
+      width="500"
+    >
+      <template v-slot:activator="{ on }">
+        <v-btn
+          color="red lighten-2"
+          dark
+          v-on="on"
+        >
+          Click Me
+        </v-btn>
+      </template>
+
+      <v-card>
+        <v-card-title
+          class="headline grey lighten-2"
+          primary-title
+        >
+          Privacy Policy
+        </v-card-title>
+
+        <v-card-text>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            text
+            @click="dialogx = false"
+          >
+            I accept
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
+</template>
+
     <template v-slot:top>
       <v-toolbar flat color="white">
         <v-toolbar-title>Жители</v-toolbar-title>
@@ -125,6 +171,7 @@
     name: 'AppTableInhabitans',
     data: () => ({
       dialog: false,
+      dialogx: false,
       menu: '',
       date: '',
       picker: '',
@@ -139,6 +186,7 @@
         { text: 'Телефон', value: 'phone' },
         { text: 'Емайл', value: 'email' },
         { text: 'Счёт', value: 'score' },
+        { text: 'Действия', value: 'dialogx', dialogx: false },
         { text: 'Действия', value: 'action', sortable: false },
       ],
       desserts: [],
