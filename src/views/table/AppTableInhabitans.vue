@@ -5,7 +5,7 @@
     sort-by="score"
     class="elevation-1"
   >
-  <template v-slot:item.score="{ item }">
+  <template v-slot:item.score="{ item } ">
       <v-chip :color="getColor(item.score)" dark>{{ item.score }}</v-chip>
   </template>
     <template v-slot:top>
@@ -187,6 +187,7 @@
       },
       getColor (score) {
         if (score < 0) return 'red'
+        else if(score === 0) return 'gray'
         else return 'green'
       },
       editItem (item) {
@@ -207,10 +208,19 @@
       },
       save () {
         if (this.editedIndex > -1) {
+          alert(this.editedItem.score)
+          if(this.editedItem.score == undefined) this.editedItem.score = 0
           this.editedItem.initials = this.editedItem.last_name + ' ' + this.editedItem.first_name.substring(0, 1) + '.' + this.editedItem.old_name.substring(0, 1)
           this.editedItem.address = this.editedItem.street + ' ' + this.editedItem.number_home + '.' + this.editedItem.number_appartament
           Object.assign(this.desserts[this.editedIndex], this.editedItem)
         } else {
+          if(this.editedItem.score == undefined) this.editedItem.score = 0
+          if(this.editedItem.last_name == undefined) this.editedItem.last_name = ''
+          if(this.editedItem.first_name == undefined) this.editedItem.first_name = ''
+          if(this.editedItem.old_name == undefined) this.editedItem.old_name = ''
+          if(this.editedItem.street == undefined) this.editedItem.street = ''
+          if(this.editedItem.number_home == undefined) this.editedItem.number_home = ''
+          if(this.editedItem.number_appartament == undefined) this.editedItem.number_appartament = ''
           this.editedItem.initials = this.editedItem.last_name + ' ' + this.editedItem.first_name.substring(0, 1) + '.' + this.editedItem.old_name.substring(0, 1)
           this.editedItem.address = this.editedItem.street + ' ' + this.editedItem.number_home + '.' + this.editedItem.number_appartament
           this.desserts.push(this.editedItem)
