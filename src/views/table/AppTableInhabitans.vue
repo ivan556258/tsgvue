@@ -36,7 +36,6 @@
     :close-on-content-click="false"
     transition="scale-transition"
     offset-y
-    full-width
     min-width="290px"
   >
     <template v-slot:activator="{ on }">
@@ -52,7 +51,6 @@
       v-model="date"
       :max="new Date().toISOString().substr(0, 10)"
       min="1950-01-01"
-      @change="save"
     ></v-date-picker>
   </v-menu>
 </v-col>
@@ -127,6 +125,9 @@
     name: 'AppTableInhabitans',
     data: () => ({
       dialog: false,
+      menu: '',
+      date: '',
+      picker: '',
       headers: [
         {
           text: 'Улица д. кв.',
@@ -160,7 +161,7 @@
       },
       menu (val) {
         val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
-      },
+      }
     },
     created () {
       this.initialize()
@@ -210,7 +211,6 @@
           this.editedItem.address = this.editedItem.street + ' ' + this.editedItem.number_home + '.' + this.editedItem.number_appartament
           Object.assign(this.desserts[this.editedIndex], this.editedItem)
         } else {
-          this.$refs.menu.save()
           this.editedItem.initials = this.editedItem.last_name + ' ' + this.editedItem.first_name.substring(0, 1) + '.' + this.editedItem.old_name.substring(0, 1)
           this.editedItem.address = this.editedItem.street + ' ' + this.editedItem.number_home + '.' + this.editedItem.number_appartament
           this.desserts.push(this.editedItem)
