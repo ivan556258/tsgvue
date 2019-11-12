@@ -10,33 +10,21 @@
   </template>
   <template v-slot:item.dialogx="{ item }">
 
-  <div class="text-center">
-    <v-dialog
-      v-model="dialogx"
-      width="500"
-    >
+
+    <v-dialog v-model="dialogx" max-width="550" min-width="250" >
       <template v-slot:activator="{ on }">
-        <v-btn
-          color="red lighten-2"
-          dark
-          v-on="on"
-        >
-          Click Me
-        </v-btn>
+      <v-icon  small class="mr-2" v-on="on">
+        create
+      </v-icon>
+      <v-icon small class="mr-2">money</v-icon>
       </template>
-
       <v-card>
-        <v-card-title
-          class="headline grey lighten-2"
-          primary-title
-        >
-          Privacy Policy
-        </v-card-title>
-
-        <v-card-text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </v-card-text>
-
+      <v-col cols="12">
+        <v-select v-model="variant" :items="items" clearable label="Веберите вариант" light > </v-select>
+      </v-col>
+      <v-col cols="12">
+          <v-text-field v-model="scoresum" label="Сумма"></v-text-field>
+      </v-col>
         <v-divider></v-divider>
 
         <v-card-actions>
@@ -44,14 +32,13 @@
           <v-btn
             color="primary"
             text
-            @click="dialogx = false"
+            @click="savesum"
           >
-            I accept
+            Сохранить
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </div>
 </template>
 
     <template v-slot:top>
@@ -75,31 +62,31 @@
             <v-card-text>
               <v-container>
                 <v-row>
-<v-col cols="12" sm="6" md="4">
-  <v-menu
-    ref="menu"
-    v-model="menu"
-    :close-on-content-click="false"
-    transition="scale-transition"
-    offset-y
-    min-width="290px"
-  >
-    <template v-slot:activator="{ on }">
-      <v-text-field
-        v-model="date"
-        label="Дата рождения"
-        readonly
-        v-on="on"
-      ></v-text-field>
-    </template>
-    <v-date-picker
-      ref="picker"
-      v-model="date"
-      :max="new Date().toISOString().substr(0, 10)"
-      min="1950-01-01"
-    ></v-date-picker>
-  </v-menu>
-</v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-menu
+                      ref="menu"
+                      v-model="menu"
+                      :close-on-content-click="false"
+                      transition="scale-transition"
+                      offset-y
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          v-model="date"
+                          label="Дата рождения"
+                          readonly
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                        ref="picker"
+                        v-model="date"
+                        :max="new Date().toISOString().substr(0, 10)"
+                        min="1950-01-01"
+                      ></v-date-picker>
+                    </v-menu>
+                  </v-col>
 
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field v-model="editedItem.last_name" label="Фамилия"></v-text-field>
@@ -190,6 +177,13 @@
         { text: 'Действия', value: 'action', sortable: false },
       ],
       desserts: [],
+      inset: false,
+      items: [
+        'Должен оплатить',
+        'Оплата',
+      ],
+      scoresum: 0,
+      variant: 'default',
       editedIndex: -1,
       editedItem: {
         phone: +7
@@ -275,6 +269,9 @@
         }
         this.close()
       },
+      savesum () {
+        this.dialogx = false
+      }
     },
   }
 </script>
