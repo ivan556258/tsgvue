@@ -8,35 +8,38 @@
   <template v-slot:item.score="{ item } ">
       <v-chip :color="getColor(item.score)" dark>{{ item.score }}</v-chip>
   </template>
-  <template v-slot:item.dialogx="{ item }">
+  <template v-slot:item.editscore="{ item }">
 
 
-    <v-dialog v-model="dialogx" max-width="550" min-width="250" >
+    <v-dialog max-width="550" min-width="250" >
       <template v-slot:activator="{ on }">
-      <v-icon  small class="mr-2" v-on="on">
+      <v-icon small class="mr-2" v-on="on">
         create
       </v-icon>
       <v-icon small class="mr-2">money</v-icon>
       </template>
       <v-card>
+       <v-form ref="form" v-model="valid" lazy-validation>
       <v-col cols="12">
-        <v-select v-model="variant" :items="items" clearable label="Веберите вариант" light > </v-select>
+        <v-select v-model="variant" :items="items" required :rules="[v => !!v || 'Вариант не выбран']" clearable label="Веберите вариант" light > </v-select>
       </v-col>
       <v-col cols="12">
-          <v-text-field v-model="scoresum" label="Сумма"></v-text-field>
+          <v-text-field v-model="scoresum" required :rules="[v => !!v || 'Укажите сумму']" clearable label="Сумма"></v-text-field>
       </v-col>
         <v-divider></v-divider>
 
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
+            :disabled="!valid"
             color="primary"
             text
-            @click="savesum"
+            @click="save(item.editscore, scoresum)"
           >
-            Сохранить
+          Сохранить
           </v-btn>
         </v-card-actions>
+         </v-form>
       </v-card>
     </v-dialog>
 </template>
@@ -63,6 +66,24 @@
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.last_name" clearable label="Фамилия"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.first_name" clearable label="Имя"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.old_name" clearable label="Отчество"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.street" clearable label="Улица"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.number_home" clearable label="Номер дома"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.number_appartament" clearable label="Номер квартиры"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
                     <v-menu
                       ref="menu"
                       v-model="menu"
@@ -75,6 +96,7 @@
                         <v-text-field
                           v-model="date"
                           label="Дата рождения"
+                          clearable
                           readonly
                           v-on="on"
                         ></v-text-field>
@@ -87,39 +109,20 @@
                       ></v-date-picker>
                     </v-menu>
                   </v-col>
-
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.last_name" label="Фамилия"></v-text-field>
+                    <v-text-field v-model="editedItem.email" clearable label="Емайл"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.first_name" label="Имя"></v-text-field>
+                    <v-text-field v-model="editedItem.phone" clearable label="Номер телефона"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.old_name" label="Отчество"></v-text-field>
+                    <v-text-field v-model="editedItem.number_telegram" clearable label="Телеграм аккаунт"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.street" label="Улица"></v-text-field>
+                    <v-text-field v-model="editedItem.number_viber" clearable label="Номер вайбер"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.number_home" label="Номер дома"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.number_appartament" label="Номер квартиры"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.email" label="Емайл"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.phone" label="Номер телефона"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.number_telegram" label="Телеграм аккаунт"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.number_viber" label="Номер вайбер"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.number_whatsapp" label="Номер ватсап"></v-text-field>
+                    <v-text-field v-model="editedItem.number_whatsapp" clearable label="Номер ватсап"></v-text-field>
                   </v-col>
                 </v-row>
               </v-container>
@@ -158,10 +161,12 @@
     name: 'AppTableInhabitans',
     data: () => ({
       dialog: false,
-      dialogx: false,
+      editscore: false,
+      score: '',
       menu: '',
       date: '',
       picker: '',
+      valid: '',
       headers: [
         {
           text: 'Улица д. кв.',
@@ -173,7 +178,7 @@
         { text: 'Телефон', value: 'phone' },
         { text: 'Емайл', value: 'email' },
         { text: 'Счёт', value: 'score' },
-        { text: 'Действия', value: 'dialogx', dialogx: false },
+        { text: 'Операции со счётом', value: 'editscore' },
         { text: 'Действия', value: 'action', sortable: false },
       ],
       desserts: [],
@@ -216,7 +221,8 @@
             initials: 6.0,
             phone: 24,
             email: 4.0,
-            score: 2,
+            score: -45,
+            editscore: -45
           },
           {
             address: 'Frozen Yogurt',
@@ -224,6 +230,7 @@
             phone: 24,
             email: 4.0,
             score: -200,
+            editscore: -200
           },
         ]
       },
@@ -249,6 +256,7 @@
         }, 300)
       },
       save () {
+
         if (this.editedIndex > -1) {
           alert(this.editedItem.score)
           if(this.editedItem.score == undefined) this.editedItem.score = 0
@@ -265,12 +273,26 @@
           if(this.editedItem.number_appartament == undefined) this.editedItem.number_appartament = ''
           this.editedItem.initials = this.editedItem.last_name + ' ' + this.editedItem.first_name.substring(0, 1) + '.' + this.editedItem.old_name.substring(0, 1)
           this.editedItem.address = this.editedItem.street + ' ' + this.editedItem.number_home + '.' + this.editedItem.number_appartament
+          this.editedItem.editscore = this.editedItem.score
           this.desserts.push(this.editedItem)
         }
         this.close()
       },
-      savesum () {
-        this.dialogx = false
+      savesum (a, b, item) {
+         if(this.editedItem.score == undefined) this.editedItem.score = 0
+          this.editedItem.initials = this.editedItem.last_name + ' ' + this.editedItem.first_name.substring(0, 1) + '.' + this.editedItem.old_name.substring(0, 1)
+          this.editedItem.address = this.editedItem.street + ' ' + this.editedItem.number_home + '.' + this.editedItem.number_appartament
+        console.log( a )
+        console.log(b)
+        console.log(item)
+        item.editscore = 454
+        
+        console.log(this);
+        
+        this.editedItem.editscore = 444
+        //Object.assign(this.desserts[this.editedIndex], this.editedItem)
+        
+        this.editscore = false
       }
     },
   }
