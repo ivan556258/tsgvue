@@ -6,7 +6,7 @@
       color="amber"
     >
       <v-app-bar-nav-icon @click="drawer = !drawer" />
-      <span class="title ml-3 mr-5">ТСЖ&nbsp;<span class="font-weight-light">БЕСПЛАТНОЕ</span></span>
+      <span class="title ml-3 mr-5">Компания&nbsp;<span class="font-weight-light">"ООО "АВТО ДРАЙВ"</span></span>
       <v-text-field
         solo-inverted
         flat
@@ -62,41 +62,153 @@
     data: () => ({
       drawer: null,
       items: [
-        { 
-          icon: 'waves', 
-          text: 'Счетчики',
-          route: '/counts'
-        },
-        { 
-          icon: 'people_outline', 
-          text: 'Жители',
-          route: '/inhabitans'
-        },
-        { 
-          icon: 'people_alt', 
-          text: 'Сотрудники',
-          route: '/employee' 
-        },
-
-        { 
-          icon: 'copyright', 
-          text: 'Блог',
-          route: '/blog'
-        },
-
-        { 
-          icon: 'email', 
-          text: 'Сообщения',
-          route: '/messages'
-        },
-
-        { 
-          icon: 'account_tree', 
-          text: 'Настройки',
-          route: '/settings'
-          },
-      ],
-    }),
+  {
+    route: '/admin/main',
+    text: 'Главная',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/Vehicle/all',
+    text: 'Автомобили',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/VehicleMaintenance/all',
+    text: 'Техобслуживание',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/VehicleSms/all',
+    text: 'Двигатель',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/VehicleOwner/all',
+    text: 'Владельцы',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/UserDriverProfile/all',
+    text: 'Клиенты',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/UserProfile/all',
+    text: 'Сотрудники',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/UserComment/all',
+    text: 'Комментарии',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/UserSms/all',
+    text: 'История SMS',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/Account/all',
+    text: 'Счета',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/AccountBill/all',
+    text: 'Приход-расход',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/AccountBillItem/all',
+    text: 'Статьи',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/Bill/all',
+    text: 'Транзакции',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/FineBillGrid/all',
+    text: 'Неоплаченые штрафы',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/BillItem/RentBillItemGrid/all',
+    text: 'Тарифы',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/Stock/all',
+    text: 'Номенклатура',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/StockSupplier/all',
+    text: 'Контрагенты',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/StockInvoice/PurchaseInvoiceGrid/all',
+    text: 'Накладные приходные',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/StockInvoice/SalesInvoiceGrid/all',
+    text: 'Накладные расходные',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/reports/MainReport',
+    text: 'Отчёт общий',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/reports/VehicleDriverReport',
+    text: 'Отчет по выручке в разрезе по водителям',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/reports/VehicleReport',
+    text: 'Отчет по автомобилям',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/reports/DriverReport',
+    text: 'Отчет по водителям',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/reports/StockReport',
+    text: 'Отчёт по складу',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/reports/accountReport',
+    text: 'По кассовым счетам',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/gps_map',
+    text: 'Карта',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/UserCompanyBill/all',
+    text: 'Платежи',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/UserCompany/',
+    text: 'Настройки',
+    icon: 'waves'
+  },
+  {
+    route: '/admin/content/support',
+    text: 'Поддержка',
+    icon: 'waves'
+  }
+      ]
+    })
   }
 </script>
 <style scoped>
